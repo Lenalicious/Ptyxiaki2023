@@ -21,18 +21,15 @@ figure;
 for ii=1:5
     if(ii == 5)
         subplot(2,3,[5 6]);
-        r = R(:,ii);
-        r = r(r~=0);
-        tt = (0:length(r)-1)*0.1/3600;
-        plot(tt,r);
+        tt = 0:length(R(:,ii))
     else
         subplot(2,3, ii);
         tt = (0:length(R(:,ii))-1)*0.1/3600;
-        plot(tt, R(:,ii));
-    end
+    plot(tt, R(:,ii));
     txt = sprintf('day %d',ii);
     title(txt);
     xlabel('time (hours)');
     ylabel('temperature (celcius)')
     grid on;
+
 end

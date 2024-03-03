@@ -1,10 +1,10 @@
-meas = load('../files/metriseis.txt')';
+meas = load('../files/capture1.txt')';
 Ts = 0.1;   %   sampling period
 fs = 1/Ts;  %   sampling frequency
 samples_per_day = 864000;
 sampling_days = length(meas)/samples_per_day;
 
-t = (0:length(meas)-1)*Ts/3600;
+t = (0:length(meas)-1)*Ts/60;
 plot(t,meas);
 title('Measurments');
 xlabel('time (seconds)');

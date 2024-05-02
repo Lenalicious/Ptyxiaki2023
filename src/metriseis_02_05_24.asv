@@ -1,0 +1,91 @@
+meas = load('../files/without attack/with_movement.txt')';
+meas2 = load('../files/without attack/without_movement.txt')';
+Ts = 0.1;   %   sampling period
+fs = 1/Ts;  %   sampling frequency
+
+
+samples_per_25min = 15000;
+sampling_parts = ceil(length(meas)/samples_per_25min);
+sampling_parts2 = ceil(length(meas2)/samples_per_25min);
+
+
+figure;
+t = (0:length(meas)-1)*Ts/60;
+plot(t,meas);
+title('Measurements');
+xlabel('time (seconds)');
+ylabel('temperature (celcius)');
+grid on;
+
+
+
+figure;
+t2 = (0:length(meas2)-1)*Ts/60;
+plot(t2,meas2);
+title('Measurements');
+xlabel('time (seconds)');
+ylabel('temperature (celcius)');
+grid on;
+
+% 
+%   break measurements per 25 minutes
+x = ceil(sampling_parts);
+bins = x*samples_per_25min-length(meas);
+new_meas = [meas zeros(1,bins)];
+R2 = reshape(new_meas,samples_per_25min,[]);
+titles = {"Boot", "Idle", "Normal"};
+
+
+%   break measurements per 25 minutes
+x2 = ceil(sampling_parts2);
+bins = x2*samples_per_25min-length(meas2);
+new_meas2 = [meas2 zeros(1,bins)];
+R3 = reshape(new_meas2,samples_per_25min,[]);
+titles2 = {"Boot2", "Idle2", "Normal2"};
+
+for ii=1:sampling_parts
+    figure;
+    if ii == 3
+        y = R2(1:length(R2(:,ii))-bins, ii)';
+    else
+        y = R2(:,ii)';
+    end
+    [ymin, idx_min] = min(y);
+    [ymax, idx_max] = max(y);
+    t = (0:length(y)-1)*Ts/60;
+    plot(t, y);
+    hold on;
+    yline(mean(y), 'LineWidth',2);
+    text(0, mean(y), ['mean: ' num2str(mean(y))]);
+    text(t(idx_min), ymin, ['ymin: ' num2str(ymin) ',' num2str(t(idx_min))]);
+    text(t(idx_max), ymax, ['ymax: ' num2str(ymax) ',' num2str(t(idx_max))]);
+    hold off;
+    title(titles(ii));
+    xlabel('time (seconds)');
+    ylabel('temperature (celcius)');
+    grid on;
+end
+
+
+for ii=1:sampling_parts
+    figure;
+    if ii == 3
+        y = R2(1:length(R2(:,ii))-bins, ii)';
+    else
+        y = R2(:,ii)';
+    end
+    [ymin, idx_min] = min(y);
+    [ymax, idx_max] = max(y);
+    t = (0:length(y)-1)*Ts/60;
+    plot(t, y);
+    hold on;
+    yline(mean(y), 'LineWidth',2);
+    text(0, mean(y), ['mean: ' num2str(mean(y))]);
+    text(t(idx_min), ymin, ['ymin: ' num2str(ymin) ',' num2str(t(idx_min))]);
+    text(t(idx_max), ymax, ['ymax: ' num2str(ymax) ',' num2str(t(idx_max))]);
+    hold off;
+    title(titles(ii));
+    xlabel('time (seconds)');
+    ylabel('temperature (celcius)');
+    grid on;
+end

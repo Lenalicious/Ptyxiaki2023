@@ -1,5 +1,5 @@
 clear all; clc;
-meas = load('../files/with attack/without_movement_with_script.txt')';
+meas = load('../files/without attack/without_movement_with_script2.txt')';
 Ts = 0.1;   %   sampling period
 fs = 1/Ts;  %   sampling frequency
 

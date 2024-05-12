@@ -1,14 +1,14 @@
 clear all; 
 clc;
 
-file1 = load('../files/without attack/night_without_movement_without_script.txt')';
+file1 = load(['../files/without attack/night_with_movement_with_script.txt']);
 Ts = 0.1;
 
 t1 = (0:length(file1)-1)*Ts/60;
 
 figure;
 plot(t1,file1);
-title('Night (w/out movement, w/out script)');
+title('Night (with movement, with script)');
 [min_val,idx_min] = min(file1);
 [max_val,idx_max] = max(file1);
 hold on;

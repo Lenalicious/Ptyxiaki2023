@@ -1,25 +1,25 @@
 clear all; clc;
-meas = load('../files/without attack/without_movement_with_script2.txt')';
+meas = load('../files/18_05_2024/whole_without_attack.txt')';
 Ts = 0.1;   %   sampling period
 fs = 1/Ts;  %   sampling frequency
 
-samples_per_25min = 15000;
-sampling_parts = ceil(length(meas)/samples_per_25min);
+samples_per_32min = 19200;
+sampling_parts = ceil(length(meas)/samples_per_32min);
 
 figure;
 t = (0:length(meas)-1)*Ts/60;
 plot(t,meas);
 title('Measurements');
-xlabel('time (seconds)');
+xlabel('time (minutes)');
 ylabel('temperature (celcius)');
 grid on;
 
 % 
-%   break measurements per 25 minutes
+%   break measurements per 32 minutes
 x = ceil(sampling_parts);
-bins = x*samples_per_25min-length(meas);
+bins = x*samples_per_32min-length(meas);
 new_meas = [meas zeros(1,bins)];
-R2 = reshape(new_meas,samples_per_25min,[]);
+R2 = reshape(new_meas,samples_per_32min,[]);
 titles = {"Boot", "Idle", "Normal"};
 for ii=1:3
     figure;
@@ -30,6 +30,7 @@ for ii=1:3
     end
     t = (0:length(y)-1)*Ts/60;
     plot(t, y);
+    %xlim([0,26]);
     [min_val,idx_min] = min(y);
     [max_val,idx_max] = max(y);
     hold on;
@@ -41,7 +42,7 @@ for ii=1:3
     % text(t(idx_max), max_val, ['max: ' num2str(max_val) 'time: ' num2str(t(idx_max))]);
     hold off;
     title(titles(ii));
-    xlabel('time (seconds)');
+    xlabel('time (minutes)');
     ylabel('temperature (celcius)');
     legend('Measurement', sprintf('Mean: %g°C', mean(y)),sprintf('Max: %g°C, Time: %g sec',max_val, t(idx_max)),sprintf('Min: %g°C, Time: %g', min_val, t(idx_min)), 'Location','southeast');
     grid on;

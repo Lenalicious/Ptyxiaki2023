@@ -1,14 +1,14 @@
 clear all; 
 clc;
 
-file1 = load(['../files/20_05_24/TMP36.txt'])';
+file1 = load(['filePath'])';
 Ts = 0.1;
 
 t1 = (0:length(file1)-1)*Ts/60;
 
 figure;
 plot(t1,file1);
-title('TMP36 (without movement/ without script/ without attack)');
+title('Title');
 [min_val,idx_min] = min(file1);
 [max_val,idx_max] = max(file1);
 hold on;

@@ -1,14 +1,14 @@
 clear all; 
 clc;
 
-file1 = load(['filePath'])';
+file1 = load(['../files/20_05_24/day_without_movement_without_script_with_attack.txt'])';
 Ts = 0.1;
 
 t1 = (0:length(file1)-1)*Ts/60;
 
 figure;
 plot(t1,file1);
-title('Title');
+title('Normal attack');
 [min_val,idx_min] = min(file1);
 [max_val,idx_max] = max(file1);
 hold on;
